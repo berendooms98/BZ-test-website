@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HappyNurse – vind jouw volgende opdracht</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border: 0; vertical-align: baseline; font-weight: 400; }
+    :root {
+      --navy:        #2D4A3E;
+      --navy-mid:    #3D6B5A;
+      --blue:        #D4DCE4;
+      --blue2:       #3D6B5A;
+      --accent:      #8B9E6A;
+      --white:       #FFFFFF;
+      --text:        #2C2C2C;
+      --text-mid:    #666666;
+      --gray:        #F5F5F0;
+      --gray2:       #E8EDF2;
+      --gray3:       #666666;
+      --font:        'Inter', system-ui, sans-serif;
+      --font-display:'Playfair Display', Georgia, serif;
+    }
+    html { font-size: 16px; line-height: 1.65; color: var(--text); font-family: var(--font); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    body { background: #fff; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    button { font-family: var(--font); cursor: pointer; }
+    ul { list-style: none; }
+
+    /* ── Layout ────────────────────────────────────────────────── */
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── TOP BAR ───────────────────────────────────────────────── */
+    .topbar {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray2);
+      font-size: 14px; line-height: 1;
+    }
+    .topbar-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 24px; max-width: 1200px; margin: 0 auto;
+    }
+    .topbar-logo img { height: 28px; }
+    .topbar-nav { display: flex; align-items: center; gap: 24px; }
+    .topbar-nav a { color: var(--navy); font-size: 14px; font-weight: 500; }
+    .topbar-nav a:hover { color: var(--blue2); }
+    .topbar-right { display: flex; align-items: center; gap: 20px; font-size: 14px; }
+    .topbar-right a { color: var(--navy); font-weight: 500; }
+    .topbar-right a:hover { color: var(--blue2); }
+    .btn-login {
+      background: var(--navy); color: #fff !important;
+      padding: 8px 18px; border-radius: 4px; font-weight: 600; font-size: 14px;
+      transition: background .15s;
+    }
+    .btn-login:hover { background: #0f2d4f !important; }
+
+    /* ── HERO ──────────────────────────────────────────────────── */
+    .hero {
+      background: var(--navy);
+      padding: 64px 0 72px;
+    }
+    .hero-inner {
+      display: flex; flex-direction: row;
+      align-items: center; justify-content: space-between;
+      gap: 48px;
+    }
+    .hero-headline { flex: 1; min-width: 0; }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4.5vw, 72px);
+      font-weight: 300; font-style: normal;
+      color: #fff; line-height: 1.1; letter-spacing: .02em;
+    }
+    @media (max-width: 768px) {
+      .hero-inner { flex-direction: column; align-items: flex-start; }
+      .hero-contact { max-width: 100%; }
+    }
+    .hero h1 span { color: var(--blue); }
+    .hero-contact {
+      width: 100%; max-width: 560px;
+      background: #fff; border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.25);
+      padding: 32px 36px;
+    }
+    .hero-contact h3 {
+      font-size: 18px; font-weight: 700; color: var(--navy);
+      margin-bottom: 20px;
+    }
+    .hero-contact .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      margin-bottom: 12px;
+    }
+    .hero-contact .form-row.full { grid-template-columns: 1fr; }
+    .hero-contact input,
+    .hero-contact textarea,
+    .hero-contact select {
+      width: 100%; border: 1.5px solid #dde3ea; border-radius: 4px;
+      padding: 11px 14px; font-size: 15px; font-family: var(--font);
+      color: var(--navy); background: #fafbfc; outline: none;
+      transition: border-color .15s;
+      box-sizing: border-box;
+    }
+    .hero-contact input:focus,
+    .hero-contact textarea:focus,
+    .hero-contact select:focus { border-color: var(--blue2); background: #fff; }
+    .hero-contact input::placeholder,
+    .hero-contact textarea::placeholder { color: #aaa; }
+    .hero-contact textarea { resize: vertical; min-height: 90px; }
+    .hero-contact button {
+      width: 100%; margin-top: 16px;
+      background: var(--navy); border: none; border-radius: 4px;
+      padding: 14px; color: #fff; font-size: 15px; font-weight: 600;
+      font-family: var(--font); cursor: pointer; letter-spacing: .04em;
+      text-transform: uppercase;
+      transition: background .15s, transform .1s;
+    }
+    .hero-contact button:hover { background: var(--navy-mid); }
+    .hero-contact button:active { transform: scale(.99); }
+
+    /* ── SECTION BASE ──────────────────────────────────────────── */
+    section { padding: 56px 0; }
+    .section-title {
+      font-size: clamp(20px, 2.5vw, 28px); font-weight: 600; color: var(--navy);
+      margin-bottom: 32px; line-height: 1.2;
+      text-transform: uppercase; letter-spacing: .08em;
+    }
+
+    /* ── SPECIALISATIES ────────────────────────────────────────── */
+    .specs { background: #fff; }
+    .specs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    @media (max-width: 1024px) { .specs-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .specs-grid { grid-template-columns: 1fr; } }
+    .spec-card { position: relative; overflow: hidden; border-radius: 4px; display: block; }
+    .spec-card-img {
+      width: 100%; aspect-ratio: 16/9; object-fit: cover;
+      display: block; transition: transform .3s ease;
+      background: var(--gray2);
+    }
+    .spec-card:hover .spec-card-img { transform: scale(1.04); }
+    .spec-card-body { padding: 20px 0 4px; }
+    .spec-card-body h3 {
+      font-size: 18px; font-weight: 700; color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .spec-card-body h3::after {
+      content: ''; display: block; width: 32px; height: 3px;
+      background: var(--blue2); margin-top: 6px;
+    }
+    .spec-card-body p { font-size: 15px; color: var(--gray3); line-height: 1.5; }
+    .spec-card-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--blue2); font-size: 15px; font-weight: 600;
+      margin-top: 10px;
+    }
+    .spec-card-link:hover { color: var(--navy); }
+
+    /* ── BLUE BAND ─────────────────────────────────────────────── */
+    .blue-band { background: #f5f7fa; padding: 80px 0; }
+    .blue-band-inner {
+      display: grid; grid-template-columns: 1fr 2fr; align-items: start; gap: 80px;
+    }
+    @media (max-width: 900px) { .blue-band-inner { grid-template-columns: 1fr; gap: 40px; } }
+    .blue-band-title h2 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4vw, 56px); font-weight: 300; font-style: normal;
+      color: var(--navy); line-height: 1.1; letter-spacing: .02em;
+    }
+    .blue-band-points {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px;
+    }
+    @media (max-width: 900px) { .blue-band-points { grid-template-columns: 1fr; } }
+    .blue-band-point-num {
+      font-size: 48px; font-weight: 800; color: var(--navy); opacity: .25;
+      line-height: 1; margin-bottom: 8px;
+    }
+    .blue-band-point-title {
+      font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 8px;
+    }
+    .blue-band-point-text {
+      font-size: 15px; color: var(--navy); opacity: .75; line-height: 1.6;
+    }
+
+    /* ── INTRODUCTIE ───────────────────────────────────────────── */
+    .intro-section { background: #f5f7fa; padding: 72px 0; }
+    .intro-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    @media (max-width: 768px) { .intro-inner { grid-template-columns: 1fr; } }
+    .intro-label {
+      font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px;
+    }
+    .intro-text h2 {
+      font-size: clamp(28px, 3vw, 36px); font-weight: 600; font-style: normal;
+      color: var(--navy); line-height: 1.2; margin-bottom: 20px;
+      letter-spacing: .01em;
+    }
+    .intro-text p { font-size: 17px; color: #444; line-height: 1.75; }
+    .intro-card {
+      background: var(--navy); border-radius: 12px; padding: 40px;
+      color: #fff;
+    }
+    .intro-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+    .intro-card p { font-size: 15px; color: rgba(255,255,255,.75); line-height: 1.7; }
+
+    /* ── VOOR OPDRACHTGEVERS ───────────────────────────────────── */
+    .voor-ogg { background: #fff; padding: 72px 0; }
+    .voor-ogg-header { margin-bottom: 48px; }
+    .voor-ogg-header h2 {
+      font-size: clamp(24px, 2.5vw, 36px); font-weight: 600; font-style: normal;
+      color: var(--navy); line-height: 1.2; margin-bottom: 12px;
+      text-transform: uppercase; letter-spacing: .06em;
+    }
+    .voor-ogg-header p { font-size: 17px; color: #555; max-width: 600px; line-height: 1.65; }
+    .voor-ogg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    @media (max-width: 768px) { .voor-ogg-grid { grid-template-columns: 1fr; } }
+    .ogg-card {
+      background: var(--navy); border-radius: 8px; padding: 32px;
+      color: #fff;
+    }
+    .ogg-card h4 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+    .ogg-card p { font-size: 14px; color: rgba(255,255,255,.7); line-height: 1.6; }
+
+    /* ── VOOR ZORGPROFESSIONALS ────────────────────────────────── */
+    .voor-zp { background: #f5f7fa; padding: 72px 0; }
+    .voor-zp-header { margin-bottom: 48px; }
+    .voor-zp-header h2 {
+      font-size: clamp(24px, 2.5vw, 36px); font-weight: 600; font-style: normal;
+      color: var(--navy); line-height: 1.2; margin-bottom: 12px;
+      text-transform: uppercase; letter-spacing: .06em;
+    }
+    .voor-zp-header p { font-size: 17px; color: #555; max-width: 600px; line-height: 1.65; }
+    .voor-zp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    @media (max-width: 900px) { .voor-zp-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 500px) { .voor-zp-grid { grid-template-columns: 1fr; } }
+    .zp-card {
+      background: #fff; border-radius: 8px; padding: 28px 24px;
+      border: 1.5px solid #e4eaf0;
+    }
+    .zp-card-icon { font-size: 28px; margin-bottom: 12px; }
+    .zp-card h4 { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .zp-card p { font-size: 14px; color: #666; line-height: 1.6; }
+
+    .btn-dark {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--navy); color: #fff;
+      padding: 14px 28px; border-radius: 4px; font-weight: 600; font-size: 15px;
+      letter-spacing: .04em; text-transform: uppercase;
+      transition: background .15s; box-shadow: 0 4px 0 rgba(0,0,0,.2);
+    }
+    .btn-dark:hover { background: var(--navy-mid); }
+
+    /* ── VACATURES ─────────────────────────────────────────────── */
+    .vacatures { background: var(--gray); }
+    .vacatures-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 24px; }
+    .vacatures-header a { color: var(--blue2); font-size: 15px; font-weight: 600; }
+    .vac-list { display: flex; flex-direction: column; gap: 2px; }
+    .vac-item {
+      background: #fff; padding: 20px 24px;
+      display: flex; align-items: center; gap: 20px;
+      border-left: 4px solid transparent;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .vac-item:hover { border-color: var(--blue2); box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+    .vac-logo {
+      width: 56px; height: 40px; object-fit: contain; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--gray3);
+      background: var(--gray); border-radius: 4px; padding: 4px;
+    }
+    .vac-info { flex: 1; }
+    .vac-title { font-size: 16px; font-weight: 700; color: var(--navy); }
+    .vac-meta { font-size: 14px; color: var(--gray3); margin-top: 2px; }
+    .vac-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+    .vac-tag {
+      font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 100px;
+      background: var(--gray); color: var(--navy); border: 1px solid var(--gray2);
+    }
+    .vac-arrow { color: var(--blue2); font-size: 20px; flex-shrink: 0; }
+
+    /* ── FILTER TAGS ───────────────────────────────────────────── */
+    .filter-section { background: #fff; padding: 40px 0; }
+    .filter-section .section-title { margin-bottom: 20px; font-size: 20px; }
+    .filter-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .filter-tag {
+      display: inline-block; padding: 8px 18px; border-radius: 100px;
+      border: 2px solid var(--navy); color: var(--navy);
+      font-size: 15px; font-weight: 600; transition: all .15s;
+    }
+    .filter-tag:hover { background: var(--navy); color: #fff; }
+
+    /* ── ALERT BANNER ──────────────────────────────────────────── */
+    .alert-banner {
+      background: #FFF8E7; border-top: 1px solid #FDEAA8; border-bottom: 1px solid #FDEAA8;
+      padding: 16px 0;
+    }
+    .alert-inner { display: flex; align-items: flex-start; gap: 14px; }
+    .alert-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .alert-text { font-size: 15px; color: var(--navy); line-height: 1.5; }
+    .alert-text strong { font-weight: 700; }
+    .alert-close { margin-left: auto; font-size: 20px; cursor: pointer; color: var(--gray3); flex-shrink: 0; }
+
+    /* ── PROMO SPLIT ───────────────────────────────────────────── */
+    .promo-split { background: #fff; }
+    .promo-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 400px; }
+    @media (max-width: 768px) { .promo-inner { grid-template-columns: 1fr; } }
+    .promo-img { width: 100%; height: 100%; min-height: 300px; object-fit: cover; background: var(--gray2); display: block; }
+    .promo-img-placeholder {
+      background: linear-gradient(135deg, #C8D5CA 0%, #8CA99F 100%);
+      display: flex; align-items: center; justify-content: center; font-size: 80px;
+      min-height: 340px;
+    }
+    .promo-body {
+      background: var(--navy); padding: 56px 48px;
+      display: flex; flex-direction: column; justify-content: center; gap: 20px;
+    }
+    .promo-body h2 {
+      font-size: clamp(24px, 3vw, 40px); font-weight: 400; font-style: italic;
+      color: #fff; line-height: 1.1;
+    }
+    .promo-body h2 strong { font-weight: 800; }
+    .promo-body h2 span { color: var(--blue); }
+    .promo-body p { font-size: 16px; color: rgba(255,255,255,.8); line-height: 1.6; }
+    .btn-blue-solid {
+      display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+      background: var(--blue2); color: #fff;
+      padding: 14px 28px; border-radius: 4px; font-weight: 700; font-size: 16px;
+      box-shadow: 0 4px 0 rgba(0,0,0,.15); transition: background .15s;
+    }
+    .btn-blue-solid:hover { background: var(--navy-mid); }
+
+    /* ── VOOR INSTELLINGEN ─────────────────────────────────────── */
+    .voor-inst { background: var(--gray); }
+    .voor-inst-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    @media (max-width: 768px) { .voor-inst-inner { grid-template-columns: 1fr; } }
+    .voor-inst-text h2 { font-size: 26px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+    .voor-inst-text p { font-size: 16px; color: var(--gray3); line-height: 1.6; margin-bottom: 24px; }
+    .inst-form { display: flex; flex-direction: column; gap: 12px; }
+    .inst-form label { font-size: 14px; font-weight: 600; color: var(--navy); display: block; margin-bottom: 4px; }
+    .inst-form input, .inst-form select {
+      width: 100%; padding: 12px 16px; border: 1px solid var(--gray2);
+      border-radius: 4px; font-family: var(--font); font-size: 16px; color: var(--navy);
+      background: #fff; outline: none; transition: border-color .15s;
+    }
+    .inst-form input:focus, .inst-form select:focus { border-color: var(--blue2); }
+    .inst-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .inst-form button {
+      background: var(--navy); color: #fff; border: none;
+      padding: 14px 28px; border-radius: 4px; font-size: 16px; font-weight: 700;
+      align-self: flex-start; transition: background .15s;
+      box-shadow: 0 4px 0 rgba(0,0,0,.15);
+    }
+    .inst-form button:hover { background: #0f2d4f; }
+
+    /* ── APP BAND ──────────────────────────────────────────────── */
+    .app-band { background: var(--blue2); padding: 64px 0; }
+    .app-inner { display: flex; align-items: center; gap: 60px; }
+    @media (max-width: 900px) { .app-inner { flex-direction: column; gap: 32px; text-align: center; } }
+    .app-phone {
+      font-size: 100px; flex-shrink: 0;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,.3));
+    }
+    .app-text h2 {
+      font-size: clamp(26px, 3.5vw, 44px); font-weight: 800; font-style: italic;
+      color: var(--navy); line-height: 1.1; margin-bottom: 14px;
+    }
+    .app-text p { font-size: 17px; color: var(--navy); line-height: 1.6; margin-bottom: 28px; }
+    .app-badges { display: flex; gap: 14px; flex-wrap: wrap; }
+    .app-badge {
+      background: var(--navy); color: #fff;
+      padding: 10px 20px; border-radius: 8px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; font-weight: 600; transition: background .15s;
+    }
+    .app-badge:hover { background: #0f2d4f; }
+    .app-badge svg { width: 20px; height: 20px; }
+
+    /* ── STATS ─────────────────────────────────────────────────── */
+    .stats { background: #fff; padding: 48px 0; border-top: 1px solid var(--gray2); border-bottom: 1px solid var(--gray2); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+    @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    .stat-num { font-size: 38px; font-weight: 800; color: var(--navy); line-height: 1; }
+    .stat-label { font-size: 15px; color: var(--gray3); margin-top: 6px; }
+
+    /* ── FOOTER ────────────────────────────────────────────────── */
+    .footer { background: var(--navy); color: rgba(255,255,255,.75); padding: 56px 0 0; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; margin-bottom: 48px; }
+    @media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } }
+    .footer-brand img { height: 28px; filter: brightness(0) invert(1); margin-bottom: 16px; }
+    .footer-brand p { font-size: 14px; line-height: 1.6; max-width: 240px; }
+    .footer-col h5 {
+      font-size: 13px; font-weight: 700; color: #fff;
+      text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px;
+    }
+    .footer-col ul { display: flex; flex-direction: column; gap: 8px; }
+    .footer-col ul a { font-size: 14px; transition: color .15s; }
+    .footer-col ul a:hover { color: var(--blue); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.12); padding: 20px 0;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 13px; flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bottom a { color: rgba(255,255,255,.6); }
+    .footer-bottom a:hover { color: var(--blue); }
+    .footer-social { display: flex; gap: 12px; }
+    .social-icon {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: rgba(255,255,255,.75);
+      transition: border-color .15s, color .15s;
+    }
+    .social-icon:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* ── ARROW SVG ─────────────────────────────────────────────── */
+    .arrow-right { display: inline-block; }
+  </style>
+</head>
+<body>
+
+<!-- ── TOP BAR ──────────────────────────────────────────────── -->
+<header>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-logo">
+        <img src="brand_assets/happynurse-logo (1).svg" alt="HappyNurse" />
+      </div>
+      <nav class="topbar-nav">
+        <a href="#home">Home</a>
+        <a href="#opdrachtgevers">Opdrachtgevers</a>
+        <a href="#zorgprofessionals">Zorgprofessionals</a>
+        <a href="#specialisaties">Onze specialisaties</a>
+        <a href="#vacatures">Vacatures</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- ── HERO ─────────────────────────────────────────────────── -->
+<section class="hero" id="home">
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="hero-headline">
+        <h1>De zorg stopt niet,<br /><span>wij stoppen ook niet.</span></h1>
+      </div>
+      <form class="hero-contact" id="contact" onsubmit="return false;">
+        <h3>Benieuwd naar de mogelijkheden?</h3>
+        <div class="form-row">
+          <input type="text" placeholder="Voornaam" />
+          <input type="text" placeholder="Achternaam" />
+        </div>
+        <div class="form-row full">
+          <input type="email" placeholder="E-mailadres" />
+        </div>
+        <div class="form-row full">
+          <input type="tel" placeholder="Telefoonnummer" />
+        </div>
+        <div class="form-row full">
+          <select>
+            <option value="" disabled selected>Welke cao is op jou van toepassing?</option>
+            <option value="ouderenzorg">Ouderenzorg</option>
+            <option value="gehandicaptenzorg">Gehandicaptenzorg</option>
+            <option value="psychiatrie">Psychiatrie</option>
+            <option value="ziekenhuizen">Ziekenhuizen</option>
+          </select>
+        </div>
+        <div class="form-row full">
+          <textarea placeholder="Jouw bericht..."></textarea>
+        </div>
+        <button type="submit">Verstuur bericht</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ─────────────────────────────────────────────────── -->
+<div class="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-num">12.400+</div>
+        <div class="stat-label">verpleegkundigen</div>
+      </div>
+      <div>
+        <div class="stat-num">1.800+</div>
+        <div class="stat-label">actieve vacatures</div>
+      </div>
+      <div>
+        <div class="stat-num">340+</div>
+        <div class="stat-label">zorginststellingen</div>
+      </div>
+      <div>
+        <div class="stat-num">98%</div>
+        <div class="stat-label">tevreden leden</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── INTRODUCTIE ───────────────────────────────────────────── -->
+<section class="intro-section">
+  <div class="wrap">
+    <div class="intro-inner">
+      <div class="intro-text">
+        <div class="intro-label">Introductie</div>
+        <h2>Wat is HappyNurse?</h2>
+        <p>HappyNurse is hét platform voor zorgprofessionals en zorginstellingen. Wij verbinden verpleegkundigen, verzorgenden en andere zorgprofessionals met de beste opdrachten en werkgevers in de regio. Of je nu op zoek bent naar een vaste baan, een flexibele opdracht of nascholingsmogelijkheden — bij HappyNurse vind je wat bij jou past.</p>
+      </div>
+      <div class="intro-card">
+        <h3>Altijd de juiste match</h3>
+        <p>Wij geloven dat tevreden zorgprofessionals betere zorg leveren. Daarom stellen we jouw wensen centraal en zorgen we voor een match die echt klopt — voor jou én voor de instelling. Persoonlijk, snel en betrouwbaar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VOOR OPDRACHTGEVERS ──────────────────────────────────── -->
+<section class="voor-ogg" id="opdrachtgevers">
+  <div class="wrap">
+    <div class="voor-ogg-header">
+      <div class="intro-label">Voor opdrachtgevers</div>
+      <h2>Wat doen we voor zorginstellingen?</h2>
+      <p>HappyNurse helpt zorginstellingen snel en betrouwbaar aan gekwalificeerd personeel. Ons netwerk van zorgprofessionals staat klaar om in te springen wanneer jij dat nodig hebt.</p>
+    </div>
+    <div class="voor-ogg-grid">
+      <div class="ogg-card">
+        <h4>Snel schakelen</h4>
+        <p>Bij plotselinge uitval of piekbelasting schakelen wij direct. Binnen korte tijd de juiste professional bij jou op de werkvloer.</p>
+      </div>
+      <div class="ogg-card">
+        <h4>Kwalitatief personeel</h4>
+        <p>Al onze professionals zijn gecertificeerd en ervaren. Wij screenen zorgvuldig zodat jij altijd kunt rekenen op kwaliteit.</p>
+      </div>
+      <div class="ogg-card">
+        <h4>Persoonlijk contact</h4>
+        <p>Geen callcenter, maar een vaste contactpersoon die jouw organisatie kent en begrijpt wat jullie nodig hebben.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VOOR ZORGPROFESSIONALS ───────────────────────────────── -->
+<section class="voor-zp" id="zorgprofessionals">
+  <div class="wrap">
+    <div class="voor-zp-header">
+      <div class="intro-label">Voor zorgprofessionals</div>
+      <h2>Wat doen we voor jou als zorgprofessional?</h2>
+      <p>Bij HappyNurse staat jouw wens centraal. Wij helpen je de opdracht te vinden die past bij jouw leven, ambities en vakgebied.</p>
+    </div>
+    <div class="voor-zp-grid">
+      <div class="zp-card">
+        <div class="zp-card-icon">📋</div>
+        <h4>Keuze uit opdrachten</h4>
+        <p>Een breed aanbod van opdrachten in ziekenhuizen, thuiszorg, GGZ en meer — jij kiest wat past.</p>
+      </div>
+      <div class="zp-card">
+        <div class="zp-card-icon">💰</div>
+        <h4>Goede beloning</h4>
+        <p>Eerlijke tarieven, transparante afspraken en tijdige uitbetaling. Altijd.</p>
+      </div>
+      <div class="zp-card">
+        <div class="zp-card-icon">📚</div>
+        <h4>Nascholing</h4>
+        <p>Blijf groeien in je vak met ons aanbod van cursussen en bijscholingsmogelijkheden.</p>
+      </div>
+      <div class="zp-card">
+        <div class="zp-card-icon">🤝</div>
+        <h4>Persoonlijke begeleiding</h4>
+        <p>Een vast aanspreekpunt dat met je meedenkt, van eerste contact tot lopende opdracht.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SPECIALISATIES ────────────────────────────────────────── -->
+<section class="specs" id="specialisaties">
+  <div class="wrap">
+    <h2 class="section-title">De specialisaties van HappyNurse.</h2>
+    <div class="specs-grid">
+      <a href="#" class="spec-card">
+        <div style="background:linear-gradient(135deg,#C8D5CA,#A2BAA9);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-size:56px;border-radius:4px;">🏥</div>
+        <div class="spec-card-body">
+          <h3>Ziekenhuis & klinisch</h3>
+          <p>IC, SEH, operatiekamer, cardiologie en meer. Vind opdrachten in de meest uitdagende klinische omgevingen van Nederland.</p>
+          <span class="spec-card-link">Bekijk vacatures <span class="arrow-right">→</span></span>
+        </div>
+      </a>
+      <a href="#" class="spec-card">
+        <div style="background:linear-gradient(135deg,#BEC9C5,#97B0A8);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-size:56px;border-radius:4px;">🏠</div>
+        <div class="spec-card-body">
+          <h3>Thuiszorg & VVT</h3>
+          <p>Werk bij mensen thuis of in woonzorgcentra. Zorg voor continuïteit en persoonlijke aandacht voor je cliënten.</p>
+          <span class="spec-card-link">Bekijk vacatures <span class="arrow-right">→</span></span>
+        </div>
+      </a>
+      <a href="#" class="spec-card">
+        <div style="background:linear-gradient(135deg,#B4C4BB,#8CA99F);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-size:56px;border-radius:4px;">🧠</div>
+        <div class="spec-card-body">
+          <h3>GGZ</h3>
+          <p>Geestelijke gezondheidszorg, revalidatie en specialistische verpleging. Maak het verschil in complexe zorgsituaties.</p>
+          <span class="spec-card-link">Bekijk vacatures <span class="arrow-right">→</span></span>
+        </div>
+      </a>
+      <a href="#" class="spec-card">
+        <div style="background:linear-gradient(135deg,#AAC0B5,#7FA898);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-size:56px;border-radius:4px;">🤝</div>
+        <div class="spec-card-body">
+          <h3>Gehandicaptenzorg</h3>
+          <p>Begeleiding en ondersteuning van mensen met een verstandelijke of lichamelijke beperking. Zinvol werk met echte impact.</p>
+          <span class="spec-card-link">Bekijk vacatures <span class="arrow-right">→</span></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── BLUE BAND ─────────────────────────────────────────────── -->
+<div class="blue-band">
+  <div class="wrap">
+    <div class="blue-band-inner">
+      <div class="blue-band-title">
+        <h2>Onze kern-<br />waarden.</h2>
+      </div>
+      <div class="blue-band-points">
+        <div>
+          <div class="blue-band-point-num">1</div>
+          <div class="blue-band-point-title">Regionaal betrokken</div>
+          <div class="blue-band-point-text">Wij kennen de regio en de mensen die er werken. Persoonlijk contact staat bij ons altijd voorop.</div>
+        </div>
+        <div>
+          <div class="blue-band-point-num">2</div>
+          <div class="blue-band-point-title">Goed gematched</div>
+          <div class="blue-band-point-text">De juiste zorgprofessional op de juiste plek, altijd. Wij zorgen voor een perfecte match tussen professional en instelling.</div>
+        </div>
+        <div>
+          <div class="blue-band-point-num">3</div>
+          <div class="blue-band-point-title">Slim leren</div>
+          <div class="blue-band-point-text">We blijven ontwikkelen — in zorg én in vakmanschap. Nascholing en groei zijn een vast onderdeel van onze aanpak.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── VACATURES ─────────────────────────────────────────────── -->
+<section class="vacatures" id="vacatures">
+  <div class="wrap">
+    <div class="vacatures-header">
+      <h2 class="section-title" style="margin-bottom:0;">Vacatures bij topwerkgevers.</h2>
+      <a href="#">Alle vacatures →</a>
+    </div>
+    <div class="vac-list">
+      <a href="#" class="vac-item">
+        <div class="vac-logo">AMC</div>
+        <div class="vac-info">
+          <div class="vac-title">IC-verpleegkundige</div>
+          <div class="vac-meta">Amsterdam UMC · Amsterdam · 32–36 uur</div>
+          <div class="vac-tags">
+            <span class="vac-tag">Intensive Care</span>
+            <span class="vac-tag">Vast</span>
+          </div>
+        </div>
+        <span class="vac-arrow">›</span>
+      </a>
+      <a href="#" class="vac-item">
+        <div class="vac-logo">ERa</div>
+        <div class="vac-info">
+          <div class="vac-title">SEH-verpleegkundige</div>
+          <div class="vac-meta">Erasmus MC · Rotterdam · 24–36 uur</div>
+          <div class="vac-tags">
+            <span class="vac-tag">SEH</span>
+            <span class="vac-tag">Flexibel</span>
+          </div>
+        </div>
+        <span class="vac-arrow">›</span>
+      </a>
+      <a href="#" class="vac-item">
+        <div class="vac-logo">ZOR</div>
+        <div class="vac-info">
+          <div class="vac-title">Wijkverpleegkundige</div>
+          <div class="vac-meta">Zorggroep Noordwest · Alkmaar · 28–36 uur</div>
+          <div class="vac-tags">
+            <span class="vac-tag">Thuiszorg</span>
+            <span class="vac-tag">Vast</span>
+          </div>
+        </div>
+        <span class="vac-arrow">›</span>
+      </a>
+      <a href="#" class="vac-item">
+        <div class="vac-logo">GGZ</div>
+        <div class="vac-info">
+          <div class="vac-title">GGZ-verpleegkundige klinisch</div>
+          <div class="vac-meta">GGZ inGeest · Amsterdam · 32–40 uur</div>
+          <div class="vac-tags">
+            <span class="vac-tag">GGZ</span>
+            <span class="vac-tag">Klinisch</span>
+          </div>
+        </div>
+        <span class="vac-arrow">›</span>
+      </a>
+      <a href="#" class="vac-item">
+        <div class="vac-logo">RDK</div>
+        <div class="vac-info">
+          <div class="vac-title">Operatieassistent</div>
+          <div class="vac-meta">Radboudumc · Nijmegen · 36 uur</div>
+          <div class="vac-tags">
+            <span class="vac-tag">OK</span>
+            <span class="vac-tag">Universitair</span>
+          </div>
+        </div>
+        <span class="vac-arrow">›</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROMO SPLIT ───────────────────────────────────────────── -->
+<section class="promo-split">
+  <div class="promo-inner">
+    <div class="promo-img-placeholder" style="background:#f5f7fa;overflow:hidden;">
+      <img src="BYHANNAHSOPHIA_2024-08257.JPG" alt="HappyNurse zorgprofessional" style="width:auto;height:100%;max-height:340px;object-fit:contain;display:block;margin:0 auto;" />
+    </div>
+    <div class="promo-body">
+      <h2>Klaar voor <span><strong>de zomer 2026</strong></span> en wat <strong>daarna</strong> komt?</h2>
+      <p>De zorg is altijd in beweging. HappyNurse helpt je als zorgprofessional altijd bij te blijven, met scholing, leuke opdrachten, en een ruim aanbod aan leuke organisaties!</p>
+      <a href="#contact" class="btn-blue-solid">Kom in contact voor nascholing →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── VOOR INSTELLINGEN ─────────────────────────────────────── -->
+<section class="voor-inst">
+  <div class="wrap">
+    <div class="voor-inst-inner">
+      <div class="voor-inst-text">
+        <h2>Voor zorginstellingen.</h2>
+        <p>Vind gekwalificeerde verpleegkundigen snel en efficiënt. Ons netwerk van meer dan 12.000 professionals staat voor je klaar.</p>
+        <ul style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+          <li style="display:flex;gap:10px;align-items:flex-start;font-size:15px;color:#767676;">
+            <span style="color:#009FD4;font-weight:700;font-size:18px;">✓</span> Directe toegang tot ons netwerk van zorgprofessionals
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;font-size:15px;color:#767676;">
+            <span style="color:#009FD4;font-weight:700;font-size:18px;">✓</span> Snel, betrouwbaar en persoonlijk contact
+          </li>
+          <li style="display:flex;gap:10px;align-items:flex-start;font-size:15px;color:#767676;">
+            <span style="color:#009FD4;font-weight:700;font-size:18px;">✓</span> Transparante tarieven zonder verborgen kosten
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:20px;">Neem contact op</h3>
+        <form class="inst-form" onsubmit="return false;">
+          <div class="inst-form-row">
+            <div>
+              <label>Voornaam</label>
+              <input type="text" placeholder="Jan" />
+            </div>
+            <div>
+              <label>Achternaam</label>
+              <input type="text" placeholder="de Vries" />
+            </div>
+          </div>
+          <div>
+            <label>E-mailadres</label>
+            <input type="email" placeholder="jan@ziekenhuis.nl" />
+          </div>
+          <div>
+            <label>Organisatie</label>
+            <input type="text" placeholder="Naam van de instelling" />
+          </div>
+          <div>
+            <label>Specialisme gezocht</label>
+            <select>
+              <option>Selecteer specialisme</option>
+              <option>IC-verpleegkundige</option>
+              <option>SEH-verpleegkundige</option>
+              <option>Wijkverpleegkundige</option>
+              <option>GGZ-verpleegkundige</option>
+              <option>Operatieassistent</option>
+              <option>Anders</option>
+            </select>
+          </div>
+          <div>
+            <label>Welke cao is van toepassing?</label>
+            <select>
+              <option value="" disabled selected>Selecteer cao</option>
+              <option value="ouderenzorg">Ouderenzorg</option>
+              <option value="gehandicaptenzorg">Gehandicaptenzorg</option>
+              <option value="psychiatrie">Psychiatrie</option>
+              <option value="ziekenhuizen">Ziekenhuizen</option>
+            </select>
+          </div>
+          <button type="submit">Verstuur aanvraag</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── APP BAND ──────────────────────────────────────────────── -->
+<div class="app-band">
+  <div class="wrap">
+    <div class="app-inner">
+      <div class="app-phone">📱</div>
+      <div class="app-text">
+        <h2>Download de<br />HappyNurse app.</h2>
+        <p>Altijd en overal je vacatures, community en nascholing bij de hand. Gratis voor iOS en Android.</p>
+        <div class="app-badges">
+          <a href="#" class="app-badge">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            App Store
+          </a>
+          <a href="#" class="app-badge">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.65.19.98.08l12.08-6.96-2.47-2.47-10.59 9.35zM20.42 10.34L17.5 8.65 14.72 11.5l2.79 2.85 2.91-1.69c.83-.48.83-1.84 0-2.32zM1.68.26C1.32.46 1 .88 1 1.51v21l12.06-12.07L1.68.26zm14.82 8.47L4.42.26.44.01l11.96 11.95 4.1-3.23z"/></svg>
+            Google Play
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="brand_assets/happynurse-logo (1).svg" alt="HappyNurse" />
+        <p>De community voor verpleegkundigen. Samen bouwen we aan een betere zorg voor iedereen.</p>
+        <div class="footer-social" style="margin-top:16px;">
+          <a href="#" class="social-icon">in</a>
+          <a href="#" class="social-icon">f</a>
+          <a href="#" class="social-icon">𝕏</a>
+          <a href="#" class="social-icon">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>HappyNurse</h5>
+        <ul>
+          <li><a href="#">Over ons</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 HappyNurse · Alle rechten voorbehouden</span>
+      <span style="display:flex;gap:16px;">
+        <a href="#">Privacy</a>
+        <a href="#">Cookies</a>
+        <a href="#">Gebruiksvoorwaarden</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll shadow
+  const topbar = document.querySelector('.topbar');
+  window.addEventListener('scroll', () => {
+    topbar.style.boxShadow = window.scrollY > 4 ? '0 2px 12px rgba(0,0,0,.1)' : '';
+  });
+
+  // Smooth anchor scroll with custom easing
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const targetId = link.getAttribute('href').slice(1);
+      if (!targetId) return;
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      e.preventDefault();
+
+      const start = window.scrollY;
+      const end = target.getBoundingClientRect().top + window.scrollY - 16; // offset for fixed header
+      const distance = end - start;
+      const duration = Math.min(Math.max(Math.abs(distance) * 0.4, 400), 900);
+      let startTime = null;
+
+      function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        window.scrollTo(0, start + distance * easeInOutCubic(progress));
+        if (progress < 1) requestAnimationFrame(step);
+      }
+
+      requestAnimationFrame(step);
+    });
+  });
+</script>
+</body>
+</html>
