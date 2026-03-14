@@ -17,7 +17,7 @@
       --blue:        #D4DCE4;
       --blue2:       #3D6B5A;
       --accent:      #8B9E6A;
-      --white:       #FFFFFF;
+      --white:       #F3F4EE;
       --text:        #2C2C2C;
       --text-mid:    #666666;
       --gray:        #F5F5F0;
@@ -27,7 +27,7 @@
       --font-display:'Playfair Display', Georgia, serif;
     }
     html { font-size: 16px; line-height: 1.65; color: var(--text); font-family: var(--font); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    body { background: #fff; }
+    body { background: #F3F4EE; }
     a { text-decoration: none; color: inherit; }
     img { display: block; max-width: 100%; }
     button { font-family: var(--font); cursor: pointer; }
@@ -84,7 +84,7 @@
     .hero h1 span { color: var(--blue); }
     .hero-contact {
       width: 100%; max-width: 560px;
-      background: #fff; border-radius: 8px;
+      background: #F3F4EE; border-radius: 8px;
       box-shadow: 0 8px 32px rgba(0,0,0,.25);
       padding: 32px 36px;
     }
@@ -108,7 +108,7 @@
     }
     .hero-contact input:focus,
     .hero-contact textarea:focus,
-    .hero-contact select:focus { border-color: var(--blue2); background: #fff; }
+    .hero-contact select:focus { border-color: var(--blue2); background: #F3F4EE; }
     .hero-contact input::placeholder,
     .hero-contact textarea::placeholder { color: #aaa; }
     .hero-contact textarea { resize: vertical; min-height: 90px; }
@@ -131,12 +131,12 @@
       cursor: pointer; text-align: left;
       transition: border-color .15s;
     }
-    .sector-trigger:hover, .sector-trigger:focus { border-color: var(--blue2); background: #fff; }
-    .sector-trigger.open { border-color: var(--blue2); background: #fff; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+    .sector-trigger:hover, .sector-trigger:focus { border-color: var(--blue2); background: #F3F4EE; }
+    .sector-trigger.open { border-color: var(--blue2); background: #F3F4EE; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
     .sector-trigger.open #sectorArrow { transform: rotate(180deg); }
     .sector-panel {
       display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 50;
-      background: #fff; border: 1.5px solid var(--blue2); border-top: none;
+      background: #F3F4EE; border: 1.5px solid var(--blue2); border-top: none;
       border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;
       padding: 6px 0;
     }
@@ -160,7 +160,7 @@
     }
 
     /* ── SPECIALISATIES ────────────────────────────────────────── */
-    .specs { background: #fff; }
+    .specs { background: #F3F4EE; }
     .specs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
     @media (max-width: 1024px) { .specs-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 600px) { .specs-grid { grid-template-columns: 1fr; } }
@@ -236,7 +236,7 @@
     .intro-card p { font-size: 15px; color: rgba(255,255,255,.75); line-height: 1.7; }
 
     /* ── VOOR OPDRACHTGEVERS ───────────────────────────────────── */
-    .voor-ogg { background: #fff; padding: 72px 0; }
+    .voor-ogg { background: #F3F4EE; padding: 72px 0; }
     .voor-ogg-header { margin-bottom: 48px; }
     .voor-ogg-header h2 {
       font-size: clamp(24px, 2.5vw, 36px); font-weight: 600; font-style: normal;
@@ -266,7 +266,7 @@
     @media (max-width: 900px) { .voor-zp-grid { grid-template-columns: repeat(2,1fr); } }
     @media (max-width: 500px) { .voor-zp-grid { grid-template-columns: 1fr; } }
     .zp-card {
-      background: #fff; border-radius: 8px; padding: 28px 24px;
+      background: #F3F4EE; border-radius: 8px; padding: 28px 24px;
       border: 1.5px solid #e4eaf0;
     }
     .zp-card-icon { font-size: 28px; margin-bottom: 12px; }
@@ -288,7 +288,7 @@
     .vacatures-header a { color: var(--blue2); font-size: 15px; font-weight: 600; }
     .vac-list { display: flex; flex-direction: column; gap: 2px; }
     .vac-item {
-      background: #fff; padding: 20px 24px;
+      background: #F3F4EE; padding: 20px 24px;
       display: flex; align-items: center; gap: 20px;
       border-left: 4px solid transparent;
       transition: border-color .15s, box-shadow .15s;
@@ -311,7 +311,7 @@
     .vac-arrow { color: var(--blue2); font-size: 20px; flex-shrink: 0; }
 
     /* ── FILTER TAGS ───────────────────────────────────────────── */
-    .filter-section { background: #fff; padding: 40px 0; }
+    .filter-section { background: #F3F4EE; padding: 40px 0; }
     .filter-section .section-title { margin-bottom: 20px; font-size: 20px; }
     .filter-tags { display: flex; flex-wrap: wrap; gap: 10px; }
     .filter-tag {
@@ -333,7 +333,7 @@
     .alert-close { margin-left: auto; font-size: 20px; cursor: pointer; color: var(--gray3); flex-shrink: 0; }
 
     /* ── PROMO SPLIT ───────────────────────────────────────────── */
-    .promo-split { background: #fff; }
+    .promo-split { background: #F3F4EE; }
     .promo-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 400px; }
     @media (max-width: 768px) { .promo-inner { grid-template-columns: 1fr; } }
     .promo-img { width: 100%; height: 100%; min-height: 300px; object-fit: cover; background: var(--gray2); display: block; }
@@ -372,7 +372,7 @@
     .inst-form input, .inst-form select {
       width: 100%; padding: 12px 16px; border: 1px solid var(--gray2);
       border-radius: 4px; font-family: var(--font); font-size: 16px; color: var(--navy);
-      background: #fff; outline: none; transition: border-color .15s;
+      background: #F3F4EE; outline: none; transition: border-color .15s;
     }
     .inst-form input:focus, .inst-form select:focus { border-color: var(--blue2); }
     .inst-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -408,7 +408,7 @@
     .app-badge svg { width: 20px; height: 20px; }
 
     /* ── STATS ─────────────────────────────────────────────────── */
-    .stats { background: #fff; padding: 48px 0; border-top: 1px solid var(--gray2); border-bottom: 1px solid var(--gray2); }
+    .stats { background: #F3F4EE; padding: 48px 0; border-top: 1px solid var(--gray2); border-bottom: 1px solid var(--gray2); }
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
     @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
     .stat-num { font-size: 38px; font-weight: 800; color: var(--navy); line-height: 1; }
