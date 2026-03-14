@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vind jouw volgende opdracht</title>
+  <meta name="description" content="Ben je zorgverlener die flexibel werk zoekt maar vindt je persoonlijk contact en aandacht voor jouw carrière belangrijk? Dan ben je bij BeerZorg aan het juiste adres. Wij kijken samen met jou naar een persoonlijk en passend rooster." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -121,6 +122,34 @@
     }
     .hero-contact button:hover { background: var(--navy-mid); }
     .hero-contact button:active { transform: scale(.99); }
+    .sector-dropdown { position: relative; width: 100%; }
+    .sector-trigger {
+      width: 100%; border: 1.5px solid #dde3ea; border-radius: 4px;
+      padding: 11px 14px; font-size: 15px; font-family: var(--font);
+      color: var(--navy); background: #fafbfc; outline: none;
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; text-align: left;
+      transition: border-color .15s;
+    }
+    .sector-trigger:hover, .sector-trigger:focus { border-color: var(--blue2); background: #fff; }
+    .sector-trigger.open { border-color: var(--blue2); background: #fff; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+    .sector-trigger.open #sectorArrow { transform: rotate(180deg); }
+    .sector-panel {
+      display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 50;
+      background: #fff; border: 1.5px solid var(--blue2); border-top: none;
+      border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;
+      padding: 6px 0;
+    }
+    .sector-panel.open { display: block; }
+    .sector-option {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 14px; cursor: pointer; font-size: 15px; color: var(--navy);
+      transition: background .1s;
+    }
+    .sector-option:hover { background: #f0f4f8; }
+    .sector-option.selected { background: #e8f0eb; }
+    .sector-option.selected:hover { background: #daeade; }
+    .sector-option input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: var(--navy); flex-shrink: 0; border: 0; }
 
     /* ── SECTION BASE ──────────────────────────────────────────── */
     section { padding: 56px 0; }
@@ -459,13 +488,21 @@
           <input type="tel" placeholder="Telefoonnummer" />
         </div>
         <div class="form-row full">
-          <select>
-            <option value="" disabled selected>Welke cao is op jou van toepassing?</option>
-            <option value="ouderenzorg">Ouderenzorg</option>
-            <option value="gehandicaptenzorg">Gehandicaptenzorg</option>
-            <option value="psychiatrie">Psychiatrie</option>
-            <option value="ziekenhuizen">Ziekenhuizen</option>
-          </select>
+          <div class="sector-dropdown" id="sectorDropdown">
+            <button type="button" class="sector-trigger" onclick="toggleSectorDropdown()">
+              <span id="sectorLabel">Gewenste sector(en)</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;transition:transform .2s" id="sectorArrow"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="sector-panel" id="sectorPanel">
+              <label class="sector-option"><input type="checkbox" value="ziekenhuiszorg" onchange="updateSectorLabel(this)"><span>Ziekenhuiszorg</span></label>
+              <label class="sector-option"><input type="checkbox" value="ouderenzorg" onchange="updateSectorLabel(this)"><span>Ouderenzorg</span></label>
+              <label class="sector-option"><input type="checkbox" value="thuiszorg" onchange="updateSectorLabel(this)"><span>Thuiszorg</span></label>
+              <label class="sector-option"><input type="checkbox" value="ggz" onchange="updateSectorLabel(this)"><span>GGZ</span></label>
+              <label class="sector-option"><input type="checkbox" value="gehandicaptenzorg" onchange="updateSectorLabel(this)"><span>Gehandicaptenzorg</span></label>
+              <label class="sector-option"><input type="checkbox" value="jeugdzorg" onchange="updateSectorLabel(this)"><span>Jeugdzorg</span></label>
+              <label class="sector-option"><input type="checkbox" value="anders" onchange="updateSectorLabel(this)"><span>Anders</span></label>
+            </div>
+          </div>
         </div>
         <div class="form-row full">
           <textarea placeholder="Jouw bericht..."></textarea>
@@ -482,7 +519,7 @@
     <div class="stats-grid">
       <div>
         <div class="stat-num">12.400+</div>
-        <div class="stat-label">verpleegkundigen</div>
+        <div class="stat-label">zorgverleners</div>
       </div>
       <div>
         <div class="stat-num">1.800+</div>
@@ -891,6 +928,28 @@
 
       requestAnimationFrame(step);
     });
+  });
+
+  function toggleSectorDropdown() {
+    const trigger = document.querySelector('.sector-trigger');
+    const panel = document.getElementById('sectorPanel');
+    trigger.classList.toggle('open');
+    panel.classList.toggle('open');
+  }
+
+  function updateSectorLabel(checkbox) {
+    checkbox.closest('.sector-option').classList.toggle('selected', checkbox.checked);
+    const checked = [...document.querySelectorAll('.sector-option input:checked')].map(el => el.nextElementSibling.textContent);
+    const label = document.getElementById('sectorLabel');
+    label.textContent = checked.length > 0 ? checked.join(', ') : 'Gewenste sector(en)';
+  }
+
+  document.addEventListener('click', function(e) {
+    const dropdown = document.getElementById('sectorDropdown');
+    if (dropdown && !dropdown.contains(e.target)) {
+      document.querySelector('.sector-trigger')?.classList.remove('open');
+      document.getElementById('sectorPanel')?.classList.remove('open');
+    }
   });
 </script>
 </body>
